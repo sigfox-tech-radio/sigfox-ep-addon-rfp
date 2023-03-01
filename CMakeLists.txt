@@ -17,6 +17,9 @@ set(ADDON_RFP_SOURCES
     src/tests_mode/sigfox_rfp_test_mode_a.c
     src/tests_mode/sigfox_rfp_test_mode_b.c
     src/tests_mode/sigfox_rfp_test_mode_c.c
+    src/tests_mode/sigfox_rfp_test_mode_d.c
+    src/tests_mode/sigfox_rfp_test_mode_e.c
+    src/tests_mode/sigfox_rfp_test_mode_f.c
     src/tests_mode/sigfox_rfp_test_mode_g.c
     src/tests_mode/sigfox_rfp_test_mode_j.c
     src/tests_mode/sigfox_rfp_test_mode_k.c
@@ -45,6 +48,9 @@ else()
     endif()
     if((${PUBLIC_KEY_CAPABLE} STREQUAL OFF) )
         list(REMOVE_ITEM ADDON_RFP_SOURCES "src/tests_mode/sigfox_rfp_test_mode_k.c")
+    endif()
+    if(${BIDIRECTIONAL} STREQUAL OFF)
+        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/tests_mode/sigfox_rfp_test_mode_f.c")
     endif()
 endif()
 

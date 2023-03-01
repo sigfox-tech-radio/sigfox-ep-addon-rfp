@@ -34,8 +34,8 @@
  *
  *******************************************************************/
 
-#ifndef SIGFOX_RFP_TEST_MODE_TYPES_H_
-#define SIGFOX_RFP_TEST_MODE_TYPES_H_
+#ifndef __SIGFOX_RFP_TEST_MODE_TYPES_H__
+#define __SIGFOX_RFP_TEST_MODE_TYPES_H__
 #ifdef USE_SIGFOX_EP_FLAGS_H
 #include "sigfox_ep_flags.h"
 #endif
@@ -66,6 +66,11 @@ typedef struct {
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_A_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_B_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_C_fn;
+#ifdef BIDIRECTIONAL
+extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_E_fn;
+extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_F_fn;
+extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_D_fn;
+#endif
 #if (defined RC3C) || (defined RC5)
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_G_fn;
 #endif
@@ -76,4 +81,4 @@ extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_K_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_L_fn;
 
 #endif
-#endif /* SIGFOX_RFP_TEST_MODE_TYPES_H_ */
+#endif /* __SIGFOX_RFP_TEST_MODE_TYPES_H__ */

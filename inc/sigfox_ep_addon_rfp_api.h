@@ -40,8 +40,8 @@
  *
  *******************************************************************/
 
-#ifndef SIGFOX_EP_ADDON_RFP_API_H_
-#define SIGFOX_EP_ADDON_RFP_API_H_
+#ifndef __SIGFOX_EP_ADDON_RFP_API_H__
+#define __SIGFOX_EP_ADDON_RFP_API_H__
 #ifdef USE_SIGFOX_EP_FLAGS_H
 #include "sigfox_ep_flags.h"
 #endif
@@ -204,4 +204,4 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_get_version(sfx_u8 **ve
 #else
 #error "CERTIFICATION flag must be define for this RFP addon"
 #endif
-#endif /* SIGFOX_EP_ADDON_RFP_API_H_ */
+#endif /* __SIGFOX_EP_ADDON_RFP_API_H__ */

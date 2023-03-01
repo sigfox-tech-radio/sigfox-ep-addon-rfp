@@ -307,10 +307,13 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_test_mode(SIGFOX_EP_ADD
             break;
 #if defined BIDIRECTIONAL
         case SIGFOX_EP_ADDON_RFP_API_TEST_MODE_D:
+            sigfox_ep_addon_rfp_api_ctx.test_mode_fn = &SIGFOX_RFP_TEST_MODE_D_fn;
             break;
         case SIGFOX_EP_ADDON_RFP_API_TEST_MODE_E:
+            sigfox_ep_addon_rfp_api_ctx.test_mode_fn = &SIGFOX_RFP_TEST_MODE_E_fn;
             break;
         case SIGFOX_EP_ADDON_RFP_API_TEST_MODE_F:
+            sigfox_ep_addon_rfp_api_ctx.test_mode_fn = &SIGFOX_RFP_TEST_MODE_F_fn;
             break;
 #endif
 #if (defined RC3C) || (defined RC5)
