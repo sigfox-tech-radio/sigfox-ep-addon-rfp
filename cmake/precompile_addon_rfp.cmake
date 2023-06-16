@@ -2,20 +2,6 @@ find_program(UNIFDEF unifdef REQUIRED)
 if(NOT UNIFDEF)
     message(FATAL_ERROR "unifdef not found!")
 endif()
-find_program(SPLINT splint REQUIRED)
-if(NOT SPLINT)
-    message(FATAL_ERROR "splint not found!")
-endif()
-
-find_program(UNIFDEF unifdef REQUIRED)
-if(NOT UNIFDEF)
-    message(FATAL_ERROR "unifdef not found!")
-endif()
-find_program(SPLINT splint REQUIRED)
-if(NOT SPLINT)
-    message(FATAL_ERROR "splint not found!")
-endif()
-
 
 #List of precompileInc and precompileSrc files
 foreach(X IN LISTS ADDON_RFP_SOURCES)

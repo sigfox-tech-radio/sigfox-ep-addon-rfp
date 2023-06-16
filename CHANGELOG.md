@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) - 16 Jun 2023
+
+### Changed
+
+* Replace -DSFX_LIB_CORE_PROTOCOL_DIR by -DSIGFOX_EP_LIB_DIR in cmake file.  
+* Add field name of anonymous structures  according to the library.
+* Replace TX control flags naming in test API according to the library.
+* Remove types warnings (unsigned to sfx_u8).
+* Change status naming according to the library.
+
+### Known limitations
+
+* **Test mode G** not supported.
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v1.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.1) - 01 Mar 2023
 
 ### General

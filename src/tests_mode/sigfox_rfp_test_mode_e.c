@@ -70,10 +70,10 @@ typedef enum {
 
 typedef struct {
     struct {
-        unsigned ep_api_message_cplt    : 1;
-        unsigned mcu_api_timer_cplt     : 1;
-        unsigned test_mode_req          : 1;
-        unsigned received               : 1;
+        sfx_u8 ep_api_message_cplt    : 1;
+        sfx_u8 mcu_api_timer_cplt     : 1;
+        sfx_u8 test_mode_req          : 1;
+        sfx_u8 received               : 1;
     }flags;
     test_state_t test_state;
     sfx_u16 index;
@@ -226,8 +226,8 @@ errors:
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) {
 #ifdef ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
-    SIGFOX_EP_API_status_t ep_api_status = SIGFOX_EP_API_SUCCESS;
-    MCU_API_status_t mcu_status = MCU_API_SUCCESS;
+    SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
+    MCU_API_status_t mcu_api_status = MCU_API_SUCCESS;
 #endif
     SIGFOX_EP_API_TEST_parameters_t test_param;
     SIGFOX_EP_API_application_message_t message_param;
@@ -254,28 +254,28 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
             test_param.rx_frequency_hz = 0;
             test_param.dl_t_rx_ms = 0;
             test_param.dl_t_w_ms = 0;
-            test_param.flags.ul_enable = 1;
+            test_param.flags.field.ul_enable = 1;
 #ifdef BIDIRECTIONAL
-            test_param.flags.dl_enable = 0;
-            test_param.flags.dl_decoding_enable = 0;
-            test_param.flags.dl_conf_enable = 0;
+            test_param.flags.field.dl_enable = 0;
+            test_param.flags.field.dl_decoding_enable = 0;
+            test_param.flags.field.dl_conf_enable = 0;
 #endif
 
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_FH)
-            test_param.flags.fh_timer_enable = SFX_FALSE;
+            test_param.flags.field.tx_control_fh_enable = SFX_FALSE;
 #endif
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LBT)
-            test_param.flags.lbt_enable = SFX_FALSE;
+            test_param.flags.field.tx_control_lbt_enable = SFX_FALSE;
 #endif
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LDC)
-            test_param.flags.ldc_check_enable = SFX_FALSE;
+            test_param.flags.field.tx_control_ldc_enable = SFX_FALSE;
 #endif
             if ( (sigfox_rfp_test_mode_e_ctx.flags.mcu_api_timer_cplt == 1) ||
                     (sigfox_rfp_test_mode_e_ctx.flags.test_mode_req == 1) ) {
                 if (sigfox_rfp_test_mode_e_ctx.flags.mcu_api_timer_cplt == 1) {
                     sigfox_rfp_test_mode_e_ctx.flags.mcu_api_timer_cplt = 0;
 #ifdef ERROR_CODES
-                mcu_status = MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
+                mcu_api_status = MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
                 MCU_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_MCU_API);
 #else
                 MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
@@ -316,7 +316,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
                 message_param.t_conf_ms = 1400;
 #endif
 #ifdef ERROR_CODES
-                ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
+                sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
                 SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
                 SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
@@ -339,26 +339,26 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
             if (sigfox_rfp_test_mode_e_ctx.flags.ep_api_message_cplt == 1) {
                 sigfox_rfp_test_mode_e_ctx.flags.ep_api_message_cplt = 0;
                 message_status = SIGFOX_EP_API_get_message_status();
-                if (message_status.execution_error == 1)
+                if (message_status.field.execution_error == 1)
                     goto errors;
                 _populate_common_param(&message_param.common_parameters);
                 test_param.tx_frequency_hz = 0;
                 test_param.rx_frequency_hz = 0;
                 test_param.dl_t_rx_ms = LISTENIG_WINDOW_TIMER_MS;
                 test_param.dl_t_w_ms = 0;
-                test_param.flags.ul_enable = 0;
+                test_param.flags.field.ul_enable = 0;
 #ifdef BIDIRECTIONAL
-                test_param.flags.dl_enable = 1;
-                test_param.flags.dl_decoding_enable = 1;
-                test_param.flags.dl_conf_enable = 0;
+                test_param.flags.field.dl_enable = 1;
+                test_param.flags.field.dl_decoding_enable = 1;
+                test_param.flags.field.dl_conf_enable = 0;
 #endif
 
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_FH)
-                test_param.flags.fh_timer_enable = SFX_FALSE;
+                test_param.flags.field.tx_control_fh_enable = SFX_FALSE;
 #endif
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LBT)
                 test_param.lbt_cs_max_duration_first_frame_ms = 0;
-                test_param.flags.lbt_enable = SFX_FALSE;
+                test_param.flags.field.tx_control_lbt_enable = SFX_FALSE;
 #endif
 #if (defined UL_PAYLOAD_SIZE) && (UL_PAYLOAD_SIZE != 0)
                 message_param.type = SIGFOX_APPLICATION_MESSAGE_TYPE_BYTE_ARRAY;
@@ -379,7 +379,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
                 message_param.t_conf_ms = 1400;
 #endif
 #ifdef ERROR_CODES
-                ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
+                sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
                 SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
                 SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
@@ -395,9 +395,9 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
             if (sigfox_rfp_test_mode_e_ctx.flags.ep_api_message_cplt == 1) {
                 sigfox_rfp_test_mode_e_ctx.flags.ep_api_message_cplt = 0;
                 message_status = SIGFOX_EP_API_get_message_status();
-                if (message_status.execution_error == 1)
+                if (message_status.field.execution_error == 1)
                     goto errors;
-                if (message_status.dl_frame == 1) {
+                if (message_status.field.dl_frame == 1) {
                     sigfox_rfp_test_mode_e_ctx.flags.received = 1;
                 } else {
                     sigfox_rfp_test_mode_e_ctx.flags.received = 0;
@@ -412,7 +412,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
                 timer.instance = MCU_API_TIMER_INSTANCE_ADDON_RFP;
                 //Start timer and send Application message
 #ifdef ERROR_CODES
-                mcu_status = MCU_API_timer_start(&timer);
+                mcu_api_status = MCU_API_timer_start(&timer);
                 MCU_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_MCU_API);
 #else
                 MCU_API_timer_start(&timer);
@@ -432,7 +432,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
             if (sigfox_rfp_test_mode_e_ctx.flags.mcu_api_timer_cplt == 1) {
                 sigfox_rfp_test_mode_e_ctx.flags.mcu_api_timer_cplt = 0;
 #ifdef ERROR_CODES
-                mcu_status = MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
+                mcu_api_status = MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
                 MCU_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_MCU_API);
 #else
                 MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);

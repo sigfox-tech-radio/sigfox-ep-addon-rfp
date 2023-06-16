@@ -135,9 +135,9 @@ typedef struct {
  *******************************************************************/
 typedef struct {
     struct {
-        unsigned error : 1;
+        sfx_u8 error : 1;
     }status;
-    unsigned progress : 7;
+    sfx_u8 progress : 7;
 } SIGFOX_EP_ADDON_RFP_API_progress_status_t;
 
 /*** SIGFOX EP API functions ***/

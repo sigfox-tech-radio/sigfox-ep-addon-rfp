@@ -61,7 +61,7 @@ typedef enum {
 
 typedef struct {
     struct {
-        unsigned ep_api_message_cplt    : 1;
+        sfx_u8 ep_api_message_cplt    : 1;
     }flags;
     test_state_t test_state;
     SIGFOX_RFP_test_mode_t test_mode;
@@ -139,14 +139,14 @@ static void _populate_test_param(SIGFOX_EP_API_TEST_parameters_t * test_param) {
     test_param->dl_t_w_ms = 0;
     test_param->flags.all = 0xFF;
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_FH)
-    test_param->flags.fh_timer_enable = SFX_FALSE;
+    test_param->flags.field.tx_control_fh_enable = SFX_FALSE;
 #endif
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LBT)
     test_param->lbt_cs_max_duration_first_frame_ms = 0;
-    test_param->flags.lbt_enable = SFX_FALSE;
+    test_param->flags.field.tx_control_lbt_enable = SFX_FALSE;
 #endif
 #if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LDC)
-    test_param->flags.ldc_check_enable = SFX_FALSE;
+    test_param->flags.field.tx_control_ldc_enable = SFX_FALSE;
 #endif
 }
 
@@ -203,7 +203,7 @@ errors:
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) {
 #ifdef ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
-    SIGFOX_EP_API_status_t ep_api_status = SIGFOX_EP_API_SUCCESS;
+    SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
 #endif
     SIGFOX_EP_API_TEST_parameters_t test_param;
     SIGFOX_EP_API_application_message_t message_param;
@@ -244,7 +244,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
             message_param.t_conf_ms = 1400;
 #endif
 #ifdef ERROR_CODES
-            ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
+            sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
             SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
             SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
@@ -259,11 +259,11 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
                 sigfox_rfp_test_mode_f_ctx.flags.ep_api_message_cplt = 0;
                 sigfox_rfp_test_mode_f_ctx.progress_status.progress = 50;
                 message_status = SIGFOX_EP_API_get_message_status();
-                if (message_status.execution_error == 1)
+                if (message_status.field.execution_error == 1)
                     goto errors;
-                if (message_status.dl_frame == 1) {
+                if (message_status.field.dl_frame == 1) {
 #ifdef ERROR_CODES
-                    ep_api_status = SIGFOX_EP_API_get_dl_payload(dl_payload, SIGFOX_DL_PAYLOAD_SIZE_BYTES, &dl_rssi_dbm);
+                    sigfox_ep_api_status = SIGFOX_EP_API_get_dl_payload(dl_payload, SIGFOX_DL_PAYLOAD_SIZE_BYTES, &dl_rssi_dbm);
                     SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
                     SIGFOX_EP_API_get_dl_payload(dl_payload, SIGFOX_DL_PAYLOAD_SIZE_BYTES, &dl_rssi_dbm);
@@ -303,7 +303,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
             message_param.message_cplt_cb = &_SIGFOX_EP_API_message_cplt_cb;
 #endif
 #ifdef ERROR_CODES
-            ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
+            sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
             SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
             SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);
@@ -319,7 +319,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
             if (sigfox_rfp_test_mode_f_ctx.flags.ep_api_message_cplt == 1) {
                 sigfox_rfp_test_mode_f_ctx.flags.ep_api_message_cplt = 0;
                 message_status = SIGFOX_EP_API_get_message_status();
-                if (message_status.execution_error == 1)
+                if (message_status.field.execution_error == 1)
                     goto errors;
 #ifdef ASYNCHRONOUS
                 if (sigfox_rfp_test_mode_f_ctx.test_mode.cplt_cb != SFX_NULL) {

@@ -3,12 +3,13 @@ project(sigfox_ep_addon_rfp)
     
 #Check if Project configure by himself or by a parent project (like sfx_lib_core_protocol)
 if ( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
-    if (NOT DEFINED  SFX_LIB_CORE_PROTOCOL_DIR)
-        message(FATAL_ERROR "${PROJECT_NAME} cannot be configured without -DSFX_LIB_CORE_PROTOCOL_DIR=<sfx_lib_core_protocol directory>")
+    if (NOT DEFINED  SIGFOX_EP_LIB_DIR)
+        message(FATAL_ERROR "${PROJECT_NAME} cannot be configured without -DSIGFOX_EP_LIB_DIR=<sfx_lib_core_protocol directory>")
     endif()
     set(ADDON_RFP OFF)
-    add_subdirectory(${SFX_LIB_CORE_PROTOCOL_DIR} "${CMAKE_CURRENT_BINARY_DIR}/${SFX_LIB_CORE_PROTOCOL_DIR}") 
+    add_subdirectory(${SIGFOX_EP_LIB_DIR} "${CMAKE_CURRENT_BINARY_DIR}/${SIGFOX_EP_LIB_DIR}") 
 else()
+    set(SIGFOX_EP_LIB_DIR ${CMAKE_SOURCE_DIR})
     message("${PROJECT_NAME} is Fetched by a parent project")
 endif()
 
@@ -59,6 +60,13 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 #Precompile module
 include(precompile_addon_rfp)
+
+add_library(${PROJECT_NAME}_obj OBJECT EXCLUDE_FROM_ALL ${ADDON_RFP_SOURCES})
+target_include_directories( ${PROJECT_NAME}_obj PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc
+    ${SIGFOX_EP_LIB_DIR}/inc
+)
+target_compile_definitions(${PROJECT_NAME}_obj PUBLIC ${DEF_FLAG_LIST})
 
 add_library(${PROJECT_NAME} STATIC ${PRECOMPIL_ADDON_RFP_SOURCES})
 add_dependencies(${PROJECT_NAME}  precompil_${PROJECT_NAME})

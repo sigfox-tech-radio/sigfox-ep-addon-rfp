@@ -9,6 +9,7 @@ The table below shows the compatibility between EP_ADDON_RFP and EP_LIB version.
 |:----------------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
 | [v1.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.0) | [v3.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.0) |
 | [v1.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.1) | [v3.1](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.1) |
+| [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) | [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
 
 ## Stack architecture
 
@@ -67,7 +68,7 @@ $ cd build
 
 ```bash
 $ cmake -DUSE_SIGFOX_EP_FLAGS_H=ON \
-        -DSFX_LIB_CORE_PROTOCOL_DIR=<replace by EP LIB path> .. 
+        -DSIGFOX_EP_LIB_DIR=<replace by EP LIB path> .. 
 $ make precompil_sigfox_ep_addon_rfp
 ```
 
@@ -102,7 +103,7 @@ $ cmake -DUSE_SIGFOX_EP_FLAGS_H=OFF \
         -DUL_PAYLOAD_SIZE=OFF \
         -DMESSAGE_COUNTER_ROLLOVER=OFF \
         -DERROR_STACK=12 \
-        -DSFX_LIB_CORE_PROTOCOL_DIR=<replace by EP LIB path>  .. 
+        -DSIGFOX_EP_LIB_DIR=<replace by EP LIB path>  .. 
 $ make precompil_sigfox_ep_addon_rfp
 ```
 

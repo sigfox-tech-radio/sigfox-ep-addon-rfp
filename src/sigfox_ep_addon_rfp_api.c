@@ -53,9 +53,9 @@ typedef enum {
 typedef union {
     struct {
         // IRQ flags.
-        unsigned ep_api_process         : 1;
-        unsigned rfp_test_mode_process  : 1;
-        unsigned rfp_test_mode_cplt     : 1;
+        sfx_u8 ep_api_process         : 1;
+        sfx_u8 rfp_test_mode_process  : 1;
+        sfx_u8 rfp_test_mode_cplt     : 1;
     };
     sfx_u8 all;
 } SIGFOX_EP_ADDON_RFP_API_flags_t;
@@ -156,7 +156,7 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_open(SIGFOX_EP_ADDON_RF
     SIGFOX_EP_API_config_t ep_api_config;
 #ifdef ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
-    SIGFOX_EP_API_status_t ep_api_status = SIGFOX_EP_API_SUCCESS;
+    SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
 #endif
     // Check RFP ADDON state.
     _CHECK_RFP_STATE(!= SIGFOX_EP_ADDON_RFP_API_STATE_CLOSE);
@@ -170,7 +170,7 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_open(SIGFOX_EP_ADDON_RF
 #endif
     // Open library.
 #ifdef ERROR_CODES
-    ep_api_status = SIGFOX_EP_API_open(&ep_api_config);
+    sigfox_ep_api_status = SIGFOX_EP_API_open(&ep_api_config);
     SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
     SIGFOX_EP_API_open(&ep_api_config);
@@ -194,11 +194,11 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_close(void) {
     // Local variables.
 #ifdef ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
-    SIGFOX_EP_API_status_t ep_api_status = SIGFOX_EP_API_SUCCESS;
+    SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
 #endif
     // Close EP library.
 #ifdef ERROR_CODES
-    ep_api_status = SIGFOX_EP_API_close();
+    sigfox_ep_api_status = SIGFOX_EP_API_close();
     SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
     SIGFOX_EP_API_close();
@@ -230,11 +230,11 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_process(void) {
     // Local variables.
 #ifdef ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
-    SIGFOX_EP_API_status_t ep_api_status = SIGFOX_EP_API_SUCCESS;
+    SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
 #endif
     if (sigfox_ep_addon_rfp_api_ctx.flags.ep_api_process == 1) {
 #ifdef ERROR_CODES
-        ep_api_status = SIGFOX_EP_API_process();
+        sigfox_ep_api_status = SIGFOX_EP_API_process();
         sigfox_ep_addon_rfp_api_ctx.flags.ep_api_process = 0;
         SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
