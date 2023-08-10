@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.3](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.3) - 10 Aug 2023
+
+### Changed
+
+* Change **Test mode F** , t_conf timer = 2000ms.  
+* Change **Test mode C** , always in frame rank = 1.
+
+### Known limitations
+
+* **Test mode G** not supported.
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) - 16 Jun 2023
 
 ### Changed

@@ -241,7 +241,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
             message_param.message_cplt_cb = &_SIGFOX_EP_API_message_cplt_cb;
 #endif
 #ifndef T_CONF_MS
-            message_param.t_conf_ms = 1400;
+            message_param.t_conf_ms = 2000;
 #endif
 #ifdef ERROR_CODES
             sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&message_param, &test_param);

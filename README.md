@@ -5,11 +5,13 @@
 This **Sigfox End-Point RF & Protocol addon** show an exemple of the [RF & Protocol test](https://support.sigfox.com/docs/rf-protocol-test-specification)  implementation. This addon is an application of the [EP LIB](https://github.com/sigfox-tech-radio/sigfox-ep-lib)  to offers a new API provided in the "sigfox_ep_addon_rfp_api.h" to execute different tests mode.
 The table below shows the compatibility between EP_ADDON_RFP and EP_LIB version.
 
-|                                  **EP_ADDON_RFP**                                  |                                  **EP_LIB**                                  |
-|:----------------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
-| [v1.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.0) | [v3.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.0) |
-| [v1.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.1) | [v3.1](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.1) |
-| [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) | [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
+|                                  **EP_ADDON_RFP**                                  |                                  **EP_LIB**                                     |
+|:----------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
+| [v1.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.0) | [v3.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.0)    |
+| [v1.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.1) | [v3.1](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.1)    |
+| [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) | [>= v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
+| [v1.3](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.3) | [>= v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
+
 
 ## Stack architecture
 

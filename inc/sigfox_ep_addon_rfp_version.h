@@ -42,6 +42,6 @@
 
 /*** Main version ***/
 
-#define SIGFOX_EP_ADDON_RFP_VERSION				"1.2"
+#define SIGFOX_EP_ADDON_RFP_VERSION				"1.3"
 
 #endif /* __SIGFOX_EP_ADDON_RFP_VERSION_H__ */
