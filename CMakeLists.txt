@@ -15,22 +15,22 @@ endif()
 
 set(ADDON_RFP_SOURCES
     src/sigfox_ep_addon_rfp_api.c
-    src/tests_mode/sigfox_rfp_test_mode_a.c
-    src/tests_mode/sigfox_rfp_test_mode_b.c
-    src/tests_mode/sigfox_rfp_test_mode_c.c
-    src/tests_mode/sigfox_rfp_test_mode_d.c
-    src/tests_mode/sigfox_rfp_test_mode_e.c
-    src/tests_mode/sigfox_rfp_test_mode_f.c
-    src/tests_mode/sigfox_rfp_test_mode_g.c
-    src/tests_mode/sigfox_rfp_test_mode_j.c
-    src/tests_mode/sigfox_rfp_test_mode_k.c
-    src/tests_mode/sigfox_rfp_test_mode_l.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_a.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_b.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_c.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_d.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_e.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_f.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_g.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_j.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_k.c
+    src/test_modes_rfp/sigfox_rfp_test_mode_l.c
 )
 
 set(ADDON_RFP_HEADERS 
     inc/sigfox_ep_addon_rfp_api.h
     inc/sigfox_ep_addon_rfp_version.h
-    inc/tests_mode/sigfox_rfp_test_mode_types.h
+    inc/test_modes_rfp/sigfox_rfp_test_mode_types.h
 )
 
 set(ADDON_RFP_PUBLIC_HEADERS
@@ -45,13 +45,13 @@ else()
         message(FATAL_ERROR "CERTIFICATION Flag must be activated for this addon")
     endif()
     if((${RC3C} STREQUAL OFF) AND (${RC5} STREQUAL OFF))
-        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/tests_mode/sigfox_rfp_test_mode_g.c")
+        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/test_modes_rfp/sigfox_rfp_test_mode_g.c")
     endif()
     if((${PUBLIC_KEY_CAPABLE} STREQUAL OFF) )
-        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/tests_mode/sigfox_rfp_test_mode_k.c")
+        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/test_modes_rfp/sigfox_rfp_test_mode_k.c")
     endif()
     if(${BIDIRECTIONAL} STREQUAL OFF)
-        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/tests_mode/sigfox_rfp_test_mode_f.c")
+        list(REMOVE_ITEM ADDON_RFP_SOURCES "src/test_modes_rfp/sigfox_rfp_test_mode_f.c")
     endif()
 endif()
 

@@ -21,7 +21,7 @@ add_custom_command(
 	DEPENDS ${CMAKE_BINARY_DIR}/undefs_file
 	DEPENDS ${CMAKE_BINARY_DIR}/defs_file
     DEPENDS ${X}
-	COMMAND	${CMAKE_COMMAND} -E make_directory ${PRECOMPIL_DIR}/src/tests_mode  ${PRECOMPIL_DIR}/inc/tests_mode
+	COMMAND	${CMAKE_COMMAND} -E make_directory ${PRECOMPIL_DIR}/src/test_modes_rfp  ${PRECOMPIL_DIR}/inc/test_modes_rfp
     COMMAND unifdef -B -k -x 2 -f ${CMAKE_BINARY_DIR}/undefs_file -f ${CMAKE_BINARY_DIR}/defs_file ${PROJECT_SOURCE_DIR}/${X} > "${PRECOMPIL_DIR}/${X}" 
 	VERBATIM
 )

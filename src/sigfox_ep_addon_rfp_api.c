@@ -38,7 +38,7 @@
 #include "sigfox_ep_addon_rfp_api.h"
 #include "sigfox_ep_addon_rfp_version.h"
 #include "sigfox_ep_api.h"
-#include "tests_mode/sigfox_rfp_test_mode_types.h"
+#include "test_modes_rfp/sigfox_rfp_test_mode_types.h"
 #ifdef CERTIFICATION
 
 typedef enum {

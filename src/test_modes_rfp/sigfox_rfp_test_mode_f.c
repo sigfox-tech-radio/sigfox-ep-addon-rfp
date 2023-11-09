@@ -46,7 +46,7 @@
  *
  *******************************************************************/
 
-#include "tests_mode/sigfox_rfp_test_mode_types.h"
+#include "test_modes_rfp/sigfox_rfp_test_mode_types.h"
 #include "sigfox_error.h"
 #include "sigfox_ep_api_test.h"
 #if (defined CERTIFICATION) && (defined BIDIRECTIONAL)

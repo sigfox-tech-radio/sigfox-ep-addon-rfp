@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.4](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.4) - 09 Nov 2023
+
+### Removed
+
+* Remove `doc` folder since images are now hosted on the GitHub wiki.
+
+### Changed
+
+* Change `tests_mode` directory name in to `test_modes_rfp`
+
+### Known limitations
+
+* **Test mode G** not supported.
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v1.3](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.3) - 10 Aug 2023
 
 ### Changed
