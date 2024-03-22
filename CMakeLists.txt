@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 project(sigfox_ep_addon_rfp)
     
-#Check if Project configure by himself or by a parent project (like sfx_lib_core_protocol)
+#Check if Project configure by himself or by a parent project (like sigfox-ep-lib)
 if ( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     if (NOT DEFINED  SIGFOX_EP_LIB_DIR)
-        message(FATAL_ERROR "${PROJECT_NAME} cannot be configured without -DSIGFOX_EP_LIB_DIR=<sfx_lib_core_protocol directory>")
+        message(FATAL_ERROR "${PROJECT_NAME} cannot be configured without -DSIGFOX_EP_LIB_DIR=<sigfox-ep-lib directory>")
     endif()
     set(ADDON_RFP OFF)
     add_subdirectory(${SIGFOX_EP_LIB_DIR} "${CMAKE_CURRENT_BINARY_DIR}/${SIGFOX_EP_LIB_DIR}") 
@@ -35,7 +35,8 @@ set(ADDON_RFP_HEADERS
 
 set(ADDON_RFP_PUBLIC_HEADERS
     inc/sigfox_ep_addon_rfp_api.h
-    inc/sigfox_ep_addon_rfp_version.h    
+    inc/sigfox_ep_addon_rfp_version.h
+    inc/test_modes_rfp/sigfox_rfp_test_mode_types.h
 )
 
 #When sigfox_ep_flag.h is don't used
@@ -44,7 +45,7 @@ else()
     if(${CERTIFICATION} STREQUAL "OFF")
         message(FATAL_ERROR "CERTIFICATION Flag must be activated for this addon")
     endif()
-    if((${RC3C} STREQUAL OFF) AND (${RC5} STREQUAL OFF))
+    if((${RC3C_ZONE} STREQUAL OFF) AND (${RC5_ZONE} STREQUAL OFF))
         list(REMOVE_ITEM ADDON_RFP_SOURCES "src/test_modes_rfp/sigfox_rfp_test_mode_g.c")
     endif()
     if((${PUBLIC_KEY_CAPABLE} STREQUAL OFF) )

@@ -96,19 +96,21 @@ typedef struct {
 typedef enum
 {
     SIGFOX_EP_ADDON_RFP_API_TEST_MODE_C = 0,    /*!< Only BPSK with Synchro Bit + Synchro frame + PN sequence : no hopping centered on the TX_frequency */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_J = 1,    /*!< with full protocol with AES key defined at SIGFOX_API_open call: send all SIGFOX protocol frames available with hopping     */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_J = 1,    /*!< with full protocol with AES key: send all SIGFOX protocol frames available with hopping */
 #if defined BIDIRECTIONAL
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_F = 2,    /*!< with full protocol with AES key defined at SIGFOX_API_open call: send SIGFOX protocol frames w/ initiate_downlink_flag     = SFX_TRUE */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_D = 3,    /*!< with known pattern with SB + SF + Pattern on RX_Frequency defined at SIGFOX_API_open function : od internaly compare re    ceived frame <=> known pattern and call sfx_test_report() */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_E = 4,    /*!< Do uplink +  downlink frame with AES key defined at SIGFOX_API_open call but specific shorter timings */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_F = 2,    /*!< with full protocol with AES key: send SIGFOX protocol frames with bidirectional flag set */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_D = 3,    /*!< with known pattern with SB + SF + Pattern on RX_Frequency */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_E = 4,    /*!< Do uplink +  downlink frame with AES key but specific shorter timings */
 #endif
     SIGFOX_EP_ADDON_RFP_API_TEST_MODE_A = 5,    /*!< Do 9 uplink frames to measure frequency synthesis step */
     SIGFOX_EP_ADDON_RFP_API_TEST_MODE_B = 6,    /*!< Call all Sigfox frames of all types and size on all the Sigfox Band  */
-#if (defined RC3C) || (defined RC5)
+#ifdef SPECTRUM_ACCESS_LBT
     SIGFOX_EP_ADDON_RFP_API_TEST_MODE_G = 11,  /*!< Call twice the Sigfox frames (payload 1 bit only) */
 #endif
+#ifdef PUBLIC_KEY_CAPABLE
     SIGFOX_EP_ADDON_RFP_API_TEST_MODE_K = 12,  /*!< Execute the public key test - all the frames of the protocol needs to be sent */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_L = 13,  /*!< Execute the nvm test */
+#endif
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_L = 13,  /*!< Execute the NVM test */
 }SIGFOX_EP_ADDON_RFP_API_test_mode_reference_t;
 
 
@@ -136,7 +138,7 @@ typedef struct {
 typedef struct {
     struct {
         sfx_u8 error : 1;
-    }status;
+    } status;
     sfx_u8 progress : 7;
 } SIGFOX_EP_ADDON_RFP_API_progress_status_t;
 
@@ -185,7 +187,7 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_test_mode(SIGFOX_EP_ADD
  * \brief Get the current message status.
  * \param[in]   none
  * \param[out]  none
- * \retval      Curren progress status.
+ * \retval      Current progress status.
  *******************************************************************/
 SIGFOX_EP_ADDON_RFP_API_progress_status_t SIGFOX_EP_ADDON_RFP_API_get_test_mode_progress_status(void);
 

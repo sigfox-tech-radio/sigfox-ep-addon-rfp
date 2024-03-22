@@ -316,7 +316,7 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_test_mode(SIGFOX_EP_ADD
             sigfox_ep_addon_rfp_api_ctx.test_mode_fn = &SIGFOX_RFP_TEST_MODE_F_fn;
             break;
 #endif
-#if (defined RC3C) || (defined RC5)
+#ifdef SPECTRUM_ACCESS_LBT
         case SIGFOX_EP_ADDON_RFP_API_TEST_MODE_G:
             sigfox_ep_addon_rfp_api_ctx.test_mode_fn = &SIGFOX_RFP_TEST_MODE_G_fn;
             break;
@@ -426,7 +426,7 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_get_version(sfx_u8 **ve
 #endif
 #ifdef PARAMETERS_CHECK
     if ((version == SFX_NULL) || (version_size_char == SFX_NULL)) {
-        EXIT_ERROR(SIGFOX_EP_API_ERROR_NULL_PARAMETER);
+        EXIT_ERROR(SIGFOX_EP_ADDON_RFP_API_ERROR_NULL_PARAMETER);
     }
 #endif
     // Check library is opened.

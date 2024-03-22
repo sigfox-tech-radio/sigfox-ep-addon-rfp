@@ -8,9 +8,10 @@ The table below shows the versions compatibility between this addon and the Sigf
 
 | **EP_ADDON_RFP** | **EP_LIB** |
 |:---:|:---:|
-| [v1.4](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.4) | >= [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
-| [v1.3](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.3) | >= [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
-| [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) | >= [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) |
+| [v1.5](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.5) | >= [v3.5](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.5) |
+| [v1.4](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.4) | [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) to [v3.4](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.4) |
+| [v1.3](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.3) | [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) to [v3.4](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.4) |
+| [v1.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.2) | [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) to [v3.4](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.4) | |
 | [v1.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.1) | [v3.1](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.1) |
 | [v1.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.0) | [v3.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.0) |
 
@@ -106,14 +107,14 @@ make precompil_sigfox_ep_addon_rfp
 ```bash
 cmake -DSIGFOX_EP_LIB_DIR=<sigfox-ep-lib path> \
       -DUSE_SIGFOX_EP_FLAGS_H=OFF \
-      -DRC1=ON \
-      -DRC2=ON \
-      -DRC3C=ON \
-      -DRC3D=ON \
-      -DRC4=ON \
-      -DRC5=ON \
-      -DRC6=ON \
-      -DRC7=ON \
+      -DRC1_ZONE=ON \
+      -DRC2_ZONE=ON \
+      -DRC3C_ZONE=ON \
+      -DRC3D_ZONE=ON \
+      -DRC4_ZONE=ON \
+      -DRC5_ZONE=ON \
+      -DRC6_ZONE=ON \
+      -DRC7_ZONE=ON \
       -DAPPLICATION_MESSAGES=ON \
       -DCONTROL_KEEP_ALIVE_MESSAGE=ON \
       -DBIDIRECTIONAL=ON \
@@ -169,14 +170,14 @@ make sigfox_ep_addon_rfp
 ```bash
 cmake -DSIGFOX_EP_LIB_DIR=<sigfox-ep-lib path> \
       -DUSE_SIGFOX_EP_FLAGS_H=OFF \
-      -DRC1=ON \
-      -DRC2=ON \
-      -DRC3C=ON \
-      -DRC3D=ON \
-      -DRC4=ON \
-      -DRC5=ON \
-      -DRC6=ON \
-      -DRC7=ON \
+      -DRC1_ZONE=ON \
+      -DRC2_ZONE=ON \
+      -DRC3C_ZONE=ON \
+      -DRC3D_ZONE=ON \
+      -DRC4_ZONE=ON \
+      -DRC5_ZONE=ON \
+      -DRC6_ZONE=ON \
+      -DRC7_ZONE=ON \
       -DAPPLICATION_MESSAGES=ON \
       -DCONTROL_KEEP_ALIVE_MESSAGE=ON \
       -DBIDIRECTIONAL=ON \

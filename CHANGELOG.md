@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.5](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.5) - 22 Mar 2024
+
+### Changed
+
+* Fix interame issue `tests_mode_c`
+* Rename `RCx` compilation flags into `RCx_ZONE` for **Microchip MCUs compatibility**.
+
+### Fixed
+
+* Add PUBLIC_KEY_CAPABLE flag on test mode K enum
+
 ## [v1.4](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.4) - 09 Nov 2023
 
 ### Removed

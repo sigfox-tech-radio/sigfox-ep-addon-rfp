@@ -71,7 +71,7 @@ extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_E_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_F_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_D_fn;
 #endif
-#if (defined RC3C) || (defined RC5)
+#ifdef SPECTRUM_ACCESS_LBT
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_G_fn;
 #endif
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_J_fn;
