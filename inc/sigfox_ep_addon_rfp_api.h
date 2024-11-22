@@ -42,15 +42,16 @@
 
 #ifndef __SIGFOX_EP_ADDON_RFP_API_H__
 #define __SIGFOX_EP_ADDON_RFP_API_H__
-#ifdef USE_SIGFOX_EP_FLAGS_H
+
+#ifndef SIGFOX_EP_DISABLE_FLAGS_FILE
 #include "sigfox_ep_flags.h"
 #endif
 #include "sigfox_types.h"
 #include "sigfox_error.h"
-#ifdef CERTIFICATION
 
+#ifdef SIGFOX_EP_CERTIFICATION
 
-#ifdef ERROR_CODES
+#ifdef SIGFOX_EP_ERROR_CODES
 typedef enum {
     SIGFOX_EP_ADDON_RFP_API_SUCCESS = 0,
     SIGFOX_EP_ADDON_RFP_API_ERROR_NULL_PARAMETER,
@@ -65,7 +66,7 @@ typedef enum {
 typedef void SIGFOX_EP_ADDON_RFP_API_status_t;
 #endif
 
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_ASYNCHRONOUS
 /*!******************************************************************
  * \brief Sigfox EP ADDON RFP API callback functions.
  * \fn SIGFOX_EP_ADDON_RFP_API_process_cb_t:      Will be called each time a low level IRQ is handled by the addon library. Warning: runs in a IRQ context. Should only change variables state, and call as soon as possible @ref SIGFOX_EP_ADDON_EP_API_process.
@@ -75,16 +76,25 @@ typedef void (*SIGFOX_EP_ADDON_RFP_API_process_cb_t)(void);
 typedef void (*SIGFOX_EP_ADDON_RFP_API_test_mode_cplt_cb_t)(void);
 #endif
 
+#ifdef SIGFOX_EP_BIDIRECTIONAL
+/*!******************************************************************
+ * \brief Sigfox EP ADDON RFP test mode D callback function.
+ * \brief This callback replaces the previous MCU_API_print_dl_payload() function defined in the Sigfox EP library until v3.6.
+ * \fn SIGFOX_EP_ADDON_RFP_API_downlink_cplt_cb_t:  Will be called as soon as a valid downlink message is received.
+ *******************************************************************/
+typedef void (*SIGFOX_EP_ADDON_RFP_API_downlink_cplt_cb_t)(sfx_u8 *dl_payload, sfx_u8 dl_payload_size, sfx_s16 rssi_dbm);
+#endif
+
 /*!******************************************************************
  * \enum SIGFOX_EP_ADDON_RFP_API_config_t
  * \briefS Sigfox EP ADDON RFP configuration structure.
  *******************************************************************/
 typedef struct {
     const SIGFOX_rc_t *rc;
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_ASYNCHRONOUS
     SIGFOX_EP_ADDON_RFP_API_process_cb_t process_cb;
 #endif
-#ifndef MESSAGE_COUNTER_ROLLOVER
+#ifndef SIGFOX_EP_MESSAGE_COUNTER_ROLLOVER
     SIGFOX_message_counter_rollover_t message_counter_rollover;
 #endif
 } SIGFOX_EP_ADDON_RFP_API_config_t;
@@ -93,53 +103,54 @@ typedef struct {
  * \enum SIGFOX_EP_ADDON_RFP_API_test_mode_t
  * \brief RF and protocol Test mode type. All tests modes reference are described in Sigfox RF & Protocol Test Specification document chapter 5 (https://support.sigfox.com/docs/rf-protocol-test-specification)
  *******************************************************************/
-typedef enum
-{
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_C = 0,    /*!< Only BPSK with Synchro Bit + Synchro frame + PN sequence : no hopping centered on the TX_frequency */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_J = 1,    /*!< with full protocol with AES key: send all SIGFOX protocol frames available with hopping */
-#if defined BIDIRECTIONAL
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_F = 2,    /*!< with full protocol with AES key: send SIGFOX protocol frames with bidirectional flag set */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_D = 3,    /*!< with known pattern with SB + SF + Pattern on RX_Frequency */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_E = 4,    /*!< Do uplink +  downlink frame with AES key but specific shorter timings */
+typedef enum {
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_C = 0, /*!< Only BPSK with Synchro Bit + Synchro frame + PN sequence : no hopping centered on the TX_frequency */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_J = 1, /*!< with full protocol with AES key: send all SIGFOX protocol frames available with hopping */
+#if defined SIGFOX_EP_BIDIRECTIONAL
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_F = 2, /*!< with full protocol with AES key: send SIGFOX protocol frames with bidirectional flag set */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_D = 3, /*!< with known pattern with SB + SF + Pattern on RX_Frequency */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_E = 4, /*!< Do uplink +  downlink frame with AES key but specific shorter timings */
 #endif
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_A = 5,    /*!< Do 9 uplink frames to measure frequency synthesis step */
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_B = 6,    /*!< Call all Sigfox frames of all types and size on all the Sigfox Band  */
-#ifdef SPECTRUM_ACCESS_LBT
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_G = 11,  /*!< Call twice the Sigfox frames (payload 1 bit only) */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_A = 5, /*!< Do 9 uplink frames to measure frequency synthesis step */
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_B = 6, /*!< Call all Sigfox frames of all types and size on all the Sigfox Band  */
+#ifdef SIGFOX_EP_SPECTRUM_ACCESS_LBT
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_G = 11, /*!< Call twice the Sigfox frames (payload 1 bit only) */
 #endif
-#ifdef PUBLIC_KEY_CAPABLE
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_K = 12,  /*!< Execute the public key test - all the frames of the protocol needs to be sent */
+#ifdef SIGFOX_EP_PUBLIC_KEY_CAPABLE
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_K = 12, /*!< Execute the public key test - all the frames of the protocol needs to be sent */
 #endif
-    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_L = 13,  /*!< Execute the NVM test */
-}SIGFOX_EP_ADDON_RFP_API_test_mode_reference_t;
-
+    SIGFOX_EP_ADDON_RFP_API_TEST_MODE_L = 13, /*!< Execute the NVM test */
+} SIGFOX_EP_ADDON_RFP_API_test_mode_reference_t;
 
 /*!******************************************************************
- * \struct SIGFOX_EP_API_control_message_t
- * \brief Control message parameters.
+ * \struct SIGFOX_EP_ADDON_RFP_API_test_mode_t
+ * \brief RFP test mode parameters.
  *******************************************************************/
 typedef struct {
     SIGFOX_EP_ADDON_RFP_API_test_mode_reference_t test_mode_reference;
-#ifndef UL_BIT_RATE_BPS
+#ifndef SIGFOX_EP_UL_BIT_RATE_BPS
     SIGFOX_ul_bit_rate_t ul_bit_rate;
 #endif
-#ifndef TX_POWER_DBM_EIRP
+#ifndef SIGFOX_EP_TX_POWER_DBM_EIRP
     sfx_s8 tx_power_dbm_eirp;
 #endif
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_BIDIRECTIONAL
+    SIGFOX_EP_ADDON_RFP_API_downlink_cplt_cb_t downlink_cplt_cb;
+#endif
+#ifdef SIGFOX_EP_ASYNCHRONOUS
     SIGFOX_EP_ADDON_RFP_API_test_mode_cplt_cb_t test_mode_cplt_cb;
 #endif
 } SIGFOX_EP_ADDON_RFP_API_test_mode_t;
 
 /*!******************************************************************
- * \union SIGFOX_EP_API_message_status_t
- * \brief Message status bitfield.
+ * \union SIGFOX_EP_ADDON_RFP_API_progress_status_t
+ * \brief RFP test mode progress status.
  *******************************************************************/
 typedef struct {
     struct {
-        sfx_u8 error : 1;
+        sfx_u8 error :1;
     } status;
-    sfx_u8 progress : 7;
+    sfx_u8 progress :7;
 } SIGFOX_EP_ADDON_RFP_API_progress_status_t;
 
 /*** SIGFOX EP API functions ***/
@@ -162,9 +173,9 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_open(SIGFOX_EP_ADDON_RF
  *******************************************************************/
 SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_close(void);
 
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_ASYNCHRONOUS
 /*!******************************************************************
- * \fn void SIGFOX_EP_ADDON_RFP_API_process(void)
+ * \fn SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_process(void)
  * \brief Main process function of the library. This function should be called as soon as possible when the process callback is triggered.
  * \param[in]   none
  * \param[out]  none
@@ -191,8 +202,7 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_test_mode(SIGFOX_EP_ADD
  *******************************************************************/
 SIGFOX_EP_ADDON_RFP_API_progress_status_t SIGFOX_EP_ADDON_RFP_API_get_test_mode_progress_status(void);
 
-
-#ifdef VERBOSE
+#ifdef SIGFOX_EP_VERBOSE
 /*!******************************************************************
  * \fn SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_get_version(sfx_u8 **version, sfx_u8 *version_size_char)
  * \brief Get EP library version.
@@ -204,6 +214,6 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_get_version(sfx_u8 **ve
 #endif
 
 #else
-#error "CERTIFICATION flag must be define for this RFP addon"
+#error "SIGFOX_EP_CERTIFICATION flag must be define for this RFP addon"
 #endif
 #endif /* __SIGFOX_EP_ADDON_RFP_API_H__ */

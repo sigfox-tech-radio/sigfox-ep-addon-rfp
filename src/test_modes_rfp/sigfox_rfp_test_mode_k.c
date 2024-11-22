@@ -43,7 +43,7 @@
 #include "test_modes_rfp/sigfox_rfp_test_mode_types.h"
 #include "sigfox_error.h"
 #include "sigfox_ep_api_test.h"
-#if (defined CERTIFICATION) && (defined PUBLIC_KEY_CAPABLE)
+#if (defined SIGFOX_EP_CERTIFICATION) && (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
 
 typedef struct {
     struct {
@@ -52,34 +52,34 @@ typedef struct {
     }flags;
     SIGFOX_RFP_test_mode_t test_mode;
     SIGFOX_EP_ADDON_RFP_API_progress_status_t progress_status;
-}SIGFOX_RFP_TEST_MODE_C_context_t;
+} SIGFOX_RFP_TEST_MODE_C_context_t;
 
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_init_fn(SIGFOX_RFP_test_mode_t *test_mode_callback);
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_process_fn(void);
 static SIGFOX_EP_ADDON_RFP_API_progress_status_t SIGFOX_RFP_TEST_MODE_K_get_progress_status_fn(void);
 
 const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_K_fn = {
-        .init_fn = &SIGFOX_RFP_TEST_MODE_K_init_fn,
-        .process_fn = &SIGFOX_RFP_TEST_MODE_K_process_fn,
-        .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_K_get_progress_status_fn,
+    .init_fn = &SIGFOX_RFP_TEST_MODE_K_init_fn,
+    .process_fn = &SIGFOX_RFP_TEST_MODE_K_process_fn,
+    .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_K_get_progress_status_fn,
 };
 
 static SIGFOX_RFP_TEST_MODE_C_context_t sigfox_rfp_test_mode_k_ctx = {
-        .flags.ep_api_message_cplt      = 0,
-        .flags.test_mode_req            = 0,
-        .test_mode.rc                   = SFX_NULL,
-#ifndef UL_BIT_RATE_BPS
-        .test_mode.ul_bit_rate          = 0,
+    .flags.ep_api_message_cplt      = 0,
+    .flags.test_mode_req            = 0,
+    .test_mode.rc                   = SIGFOX_NULL,
+#ifndef SIGFOX_EP_UL_BIT_RATE_BPS
+    .test_mode.ul_bit_rate          = 0,
 #endif
-#ifndef TX_POWER_DBM_EIRP
-        .test_mode.tx_power_dbm_eirp    = 0,
+#ifndef SIGFOX_EP_TX_POWER_DBM_EIRP
+    .test_mode.tx_power_dbm_eirp    = 0,
 #endif
-#ifdef ASYNCHRONOUS
-        .test_mode.process_cb           = SFX_NULL,
-        .test_mode.cplt_cb              = SFX_NULL,
+#ifdef SIGFOX_EP_ASYNCHRONOUS
+    .test_mode.process_cb           = SIGFOX_NULL,
+    .test_mode.cplt_cb              = SIGFOX_NULL,
 #endif
-        .progress_status.status.error   = 0,
-        .progress_status.progress       = 0,
+    .progress_status.status.error   = 0,
+    .progress_status.progress       = 0,
 };
 
 /*!******************************************************************
@@ -91,9 +91,10 @@ static SIGFOX_RFP_TEST_MODE_C_context_t sigfox_rfp_test_mode_k_ctx = {
  *******************************************************************/
 static void _SIGFOX_EP_API_message_cplt_cb(void) {
     sigfox_rfp_test_mode_k_ctx.flags.ep_api_message_cplt = 1;
-#ifdef ASYNCHRONOUS
-    if (sigfox_rfp_test_mode_k_ctx.test_mode.process_cb != SFX_NULL)
+#ifdef SIGFOX_EP_ASYNCHRONOUS
+    if (sigfox_rfp_test_mode_k_ctx.test_mode.process_cb != SIGFOX_NULL) {
         sigfox_rfp_test_mode_k_ctx.test_mode.process_cb();
+    }
 #endif
 }
 
@@ -105,64 +106,64 @@ static void _SIGFOX_EP_API_message_cplt_cb(void) {
  * \retval      SIGFOX_EP_ADDON_RFP_API_status_t
  *******************************************************************/
 static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(void) {
-#ifdef ERROR_CODES
+#ifdef SIGFOX_EP_ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
     SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
 #endif
     SIGFOX_EP_API_TEST_parameters_t test_param = {0};
-#ifdef APPLICATION_MESSAGES
+#ifdef SIGFOX_EP_APPLICATION_MESSAGES
     SIGFOX_EP_API_application_message_t application_message = {0};
-#ifdef UL_PAYLOAD_SIZE
-#if (UL_PAYLOAD_SIZE != 0)
+#ifdef SIGFOX_EP_UL_PAYLOAD_SIZE
+#if (SIGFOX_EP_UL_PAYLOAD_SIZE != 0)
     sfx_u8 data_cnt;
-    sfx_u8 data[UL_PAYLOAD_SIZE] = {0x00};
+    sfx_u8 data[SIGFOX_EP_UL_PAYLOAD_SIZE] = {0x00};
 #endif
 #endif
 #else
     SIGFOX_EP_API_control_message_t application_message = {0};
 #endif
-    //Configure application message structure
-#ifndef UL_BIT_RATE_BPS
+    // Configure application message structure
+#ifndef SIGFOX_EP_UL_BIT_RATE_BPS
     /*TODO manage 100/600*/
     application_message.common_parameters.ul_bit_rate = sigfox_rfp_test_mode_k_ctx.test_mode.ul_bit_rate;
 #endif
-#ifndef TX_POWER_DBM_EIRP
+#ifndef SIGFOX_EP_TX_POWER_DBM_EIRP
     application_message.common_parameters.tx_power_dbm_eirp = sigfox_rfp_test_mode_k_ctx.test_mode.tx_power_dbm_eirp;
 #endif
-#ifndef SINGLE_FRAME
+#ifndef SIGFOX_EP_SINGLE_FRAME
     application_message.common_parameters.number_of_frames = 3;
-#ifndef T_IFU_MS
+#ifndef SIGFOX_EP_T_IFU_MS
     application_message.common_parameters.t_ifu_ms = 1000;
 #endif
 #endif
-#ifdef PUBLIC_KEY_CAPABLE
+#ifdef SIGFOX_EP_PUBLIC_KEY_CAPABLE
     application_message.common_parameters.ep_key_type = SIGFOX_EP_KEY_PUBLIC;
 #endif
     test_param.tx_frequency_hz = 0;
-#ifdef BIDIRECTIONAL
+#ifdef SIGFOX_EP_BIDIRECTIONAL
     test_param.rx_frequency_hz = 0;
     test_param.dl_t_rx_ms = 0;
     test_param.dl_t_w_ms = 0;
 #endif
     test_param.flags.all = 0xFF;
-#if (defined REGULATORY) && (defined SPECTRUM_ACCESS_FH)
-    test_param.flags.field.tx_control_fh_enable = SFX_FALSE;
+#if (defined SIGFOX_EP_REGULATORY) && (defined SIGFOX_EP_SPECTRUM_ACCESS_FH)
+    test_param.flags.field.tx_control_fh_enable = SIGFOX_FALSE;
 #endif
-#if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LBT)
+#if (defined SIGFOX_EP_REGULATORY) && (defined SIGFOX_EP_SPECTRUM_ACCESS_LBT)
     test_param.lbt_cs_max_duration_first_frame_ms = 0;
-    test_param.flags.field.tx_control_lbt_enable = SFX_FALSE;
+    test_param.flags.field.tx_control_lbt_enable = SIGFOX_FALSE;
 #endif
-#if (defined REGULATORY) && (defined SPECTRUM_ACCESS_LDC)
-    test_param.flags.field.tx_control_ldc_enable = SFX_FALSE;
+#if (defined SIGFOX_EP_REGULATORY) && (defined SIGFOX_EP_SPECTRUM_ACCESS_LDC)
+    test_param.flags.field.tx_control_ldc_enable = SIGFOX_FALSE;
 #endif
-#ifdef APPLICATION_MESSAGES
-#ifdef UL_PAYLOAD_SIZE
-#if (UL_PAYLOAD_SIZE == 0)
+#ifdef SIGFOX_EP_APPLICATION_MESSAGES
+#ifdef SIGFOX_EP_UL_PAYLOAD_SIZE
+#if (SIGFOX_EP_UL_PAYLOAD_SIZE == 0)
     application_message.type = SIGFOX_APPLICATION_MESSAGE_TYPE_EMPTY;
 #else
     application_message.type = SIGFOX_APPLICATION_MESSAGE_TYPE_BYTE_ARRAY;
-    for (data_cnt = 0; data_cnt < UL_PAYLOAD_SIZE; data_cnt++) {
-        data[data_cnt] = (sfx_u8)0xAA;
+    for (data_cnt = 0; data_cnt < SIGFOX_EP_UL_PAYLOAD_SIZE; data_cnt++) {
+        data[data_cnt] = (sfx_u8) 0xAA;
     }
     application_message.ul_payload = data;
 #endif
@@ -173,33 +174,33 @@ static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(void) {
 #else
     application_message.type = SIGFOX_CONTROL_MESSAGE_TYPE_KEEP_ALIVE;
 #endif
-#ifdef ASYNCHRONOUS
-    application_message.uplink_cplt_cb = SFX_NULL;
+#ifdef SIGFOX_EP_ASYNCHRONOUS
+    application_message.uplink_cplt_cb = SIGFOX_NULL;
     application_message.message_cplt_cb = &_SIGFOX_EP_API_message_cplt_cb;
 #endif
 
-    //Send Application message
-#ifdef ERROR_CODES
-#ifdef APPLICATION_MESSAGES
+    // Send Application message
+#ifdef SIGFOX_EP_ERROR_CODES
+#ifdef SIGFOX_EP_APPLICATION_MESSAGES
     sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_application_message(&application_message, &test_param);
 #else
     sigfox_ep_api_status = SIGFOX_EP_API_TEST_send_control_message(&application_message, &test_param);
 #endif
     SIGFOX_EP_API_check_status(SIGFOX_EP_ADDON_RFP_API_ERROR_EP_API);
 #else
-#ifdef APPLICATION_MESSAGES
+#ifdef SIGFOX_EP_APPLICATION_MESSAGES
     SIGFOX_EP_API_TEST_send_application_message(&application_message, &test_param);
 #else
     SIGFOX_EP_API_TEST_send_control_message(&application_message, &test_param);
 #endif
 #endif
-#ifndef ASYNCHRONOUS
+#ifndef SIGFOX_EP_ASYNCHRONOUS
     _SIGFOX_EP_API_message_cplt_cb();
 #endif
-#ifdef ERROR_CODES
+#ifdef SIGFOX_EP_ERROR_CODES
 errors:
 #endif
-    RETURN();
+    SIGFOX_RETURN();
 }
 
 /*!******************************************************************
@@ -210,41 +211,40 @@ errors:
  * \retval      none
  *******************************************************************/
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_init_fn(SIGFOX_RFP_test_mode_t *rfp_test_mode) {
-#ifdef ERROR_CODES
+#ifdef SIGFOX_EP_ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
 #endif
-#ifdef PARAMETERS_CHECK
-    if (rfp_test_mode == SFX_NULL) {
-#ifdef ERROR_CODES
-        EXIT_ERROR(SIGFOX_EP_ADDON_RFP_API_ERROR_NULL_PARAMETER);
+#ifdef SIGFOX_EP_PARAMETERS_CHECK
+    if (rfp_test_mode == SIGFOX_NULL) {
+#ifdef SIGFOX_EP_ERROR_CODES
+        SIGFOX_EXIT_ERROR(SIGFOX_EP_ADDON_RFP_API_ERROR_NULL_PARAMETER);
 #else
         goto errors;
 #endif
     }
-#endif /* PARAMETERS_CHECK */
-    //Reset static context
+#endif /* SIGFOX_EP_PARAMETERS_CHECK */
+    // Reset static context
     sigfox_rfp_test_mode_k_ctx.flags.ep_api_message_cplt = 0;
     sigfox_rfp_test_mode_k_ctx.progress_status.status.error = 0;
     sigfox_rfp_test_mode_k_ctx.progress_status.progress = 0;
     // Store test mode parameters locally.
     sigfox_rfp_test_mode_k_ctx.test_mode.rc = rfp_test_mode->rc;
-#ifndef UL_BIT_RATE_BPS
+#ifndef SIGFOX_EP_UL_BIT_RATE_BPS
     sigfox_rfp_test_mode_k_ctx.test_mode.ul_bit_rate = rfp_test_mode->ul_bit_rate;
 #endif
-#ifndef TX_POWER_DBM_EIRP
+#ifndef SIGFOX_EP_TX_POWER_DBM_EIRP
     sigfox_rfp_test_mode_k_ctx.test_mode.tx_power_dbm_eirp = rfp_test_mode->tx_power_dbm_eirp,
 #endif
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_ASYNCHRONOUS
     sigfox_rfp_test_mode_k_ctx.test_mode.process_cb = rfp_test_mode->process_cb;
     sigfox_rfp_test_mode_k_ctx.test_mode.cplt_cb = rfp_test_mode->cplt_cb;
 #endif
     sigfox_rfp_test_mode_k_ctx.flags.test_mode_req = 1;
-#ifdef PARAMETERS_CHECK
+#ifdef SIGFOX_EP_PARAMETERS_CHECK
 errors:
 #endif
-    RETURN();
+    SIGFOX_RETURN();
 }
-
 
 /*!******************************************************************
  * \fn static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_C_process_fn(void)
@@ -254,20 +254,20 @@ errors:
  * \retval      none
  *******************************************************************/
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_process_fn(void) {
-#ifdef ERROR_CODES
+#ifdef SIGFOX_EP_ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
 #endif
     SIGFOX_EP_API_message_status_t message_status;
     if (sigfox_rfp_test_mode_k_ctx.flags.test_mode_req == 1) {
         sigfox_rfp_test_mode_k_ctx.flags.test_mode_req = 0;
-#ifdef ERROR_CODES
+#ifdef SIGFOX_EP_ERROR_CODES
         status = _send_application_message();
-        CHECK_STATUS(SIGFOX_EP_ADDON_RFP_API_SUCCESS);
+        SIGFOX_CHECK_STATUS(SIGFOX_EP_ADDON_RFP_API_SUCCESS);
 #else
         _send_application_message();
 #endif
     }
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_ASYNCHRONOUS
     else {
         if (sigfox_rfp_test_mode_k_ctx.flags.ep_api_message_cplt == 1) {
             sigfox_rfp_test_mode_k_ctx.flags.ep_api_message_cplt = 0;
@@ -276,14 +276,14 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_process_fn(void) 
                 goto errors;
             }
             sigfox_rfp_test_mode_k_ctx.progress_status.progress = 100;
-            if (sigfox_rfp_test_mode_k_ctx.test_mode.cplt_cb != SFX_NULL) {
+            if (sigfox_rfp_test_mode_k_ctx.test_mode.cplt_cb != SIGFOX_NULL) {
                 sigfox_rfp_test_mode_k_ctx.progress_status.progress = 100;
                 sigfox_rfp_test_mode_k_ctx.test_mode.cplt_cb();
             }
         }
     }
 #else
-    while(1) {
+    while (1) {
         if (sigfox_rfp_test_mode_k_ctx.flags.ep_api_message_cplt == 1) {
             sigfox_rfp_test_mode_k_ctx.flags.ep_api_message_cplt = 0;
             message_status = SIGFOX_EP_API_get_message_status();
@@ -296,14 +296,14 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_process_fn(void) 
     sigfox_rfp_test_mode_k_ctx.progress_status.progress = 100;
 #endif
 
-    RETURN();
+    SIGFOX_RETURN();
 errors:
     sigfox_rfp_test_mode_k_ctx.progress_status.status.error = 1;
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_ASYNCHRONOUS
     // test procedure done.
     sigfox_rfp_test_mode_k_ctx.test_mode.cplt_cb();
 #endif
-    RETURN();
+    SIGFOX_RETURN();
 }
 
 /*!******************************************************************
@@ -316,4 +316,4 @@ errors:
 static SIGFOX_EP_ADDON_RFP_API_progress_status_t SIGFOX_RFP_TEST_MODE_K_get_progress_status_fn(void) {
     return sigfox_rfp_test_mode_k_ctx.progress_status;
 }
-#endif //CERTIFICATION
+#endif // SIGFOX_EP_CERTIFICATION

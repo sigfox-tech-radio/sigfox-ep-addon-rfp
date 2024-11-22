@@ -36,22 +36,26 @@
 
 #ifndef __SIGFOX_RFP_TEST_MODE_TYPES_H__
 #define __SIGFOX_RFP_TEST_MODE_TYPES_H__
-#ifdef USE_SIGFOX_EP_FLAGS_H
+
+#ifndef SIGFOX_EP_DISABLE_FLAGS_FILE
 #include "sigfox_ep_flags.h"
 #endif
 #include "sigfox_types.h"
 #include "sigfox_ep_addon_rfp_api.h"
-#ifdef CERTIFICATION
+#ifdef SIGFOX_EP_CERTIFICATION
 
 typedef struct {
     const SIGFOX_rc_t *rc;
-#ifndef UL_BIT_RATE_BPS
+#ifndef SIGFOX_EP_UL_BIT_RATE_BPS
     SIGFOX_ul_bit_rate_t ul_bit_rate;
 #endif
-#ifndef TX_POWER_DBM_EIRP
+#ifndef SIGFOX_EP_TX_POWER_DBM_EIRP
     sfx_s8 tx_power_dbm_eirp;
 #endif
-#ifdef ASYNCHRONOUS
+#ifdef SIGFOX_EP_BIDIRECTIONAL
+    SIGFOX_EP_ADDON_RFP_API_downlink_cplt_cb_t downlink_cplt_cb;
+#endif
+#ifdef SIGFOX_EP_ASYNCHRONOUS
     void (*process_cb)(void);
     void (*cplt_cb)(void);
 #endif
@@ -66,16 +70,16 @@ typedef struct {
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_A_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_B_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_C_fn;
-#ifdef BIDIRECTIONAL
+#ifdef SIGFOX_EP_BIDIRECTIONAL
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_E_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_F_fn;
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_D_fn;
 #endif
-#ifdef SPECTRUM_ACCESS_LBT
+#ifdef SIGFOX_EP_SPECTRUM_ACCESS_LBT
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_G_fn;
 #endif
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_J_fn;
-#ifdef PUBLIC_KEY_CAPABLE
+#ifdef SIGFOX_EP_PUBLIC_KEY_CAPABLE
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_K_fn;
 #endif
 extern const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_L_fn;
