@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.0) - 22 Nov 2024
+
+### Added
+
+* Add **new** `downlink_cplt_cb` **callback to print DL payload** when the D test mode receives a valid downlink frame (`MCU_API_print_dl_payload()` function replacement).
+
+### Changed
+
+* Upgrade to **sigfox-ep-lib v4.0**
+* Use sigfox_ep_addon_rfp_obj target object to build sigfox_ep_addon_rfp library.
+
+## Fixed
+
+* Remove unifdef dependency in all cmake with linked target.
+* Extra warning in test mode J.
+
+### Known limitations
+
+* **Test mode G** not supported.
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v1.5](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.5) - 22 Mar 2024
 
 ### Changed

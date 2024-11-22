@@ -36,12 +36,12 @@
 #ifndef __SIGFOX_EP_ADDON_RFP_VERSION_H__
 #define __SIGFOX_EP_ADDON_RFP_VERSION_H__
 
-#ifdef USE_SIGFOX_EP_FLAGS_H
+#ifndef SIGFOX_EP_DISABLE_FLAGS_FILE
 #include "sigfox_ep_flags.h"
 #endif
 
 /*** Main version ***/
 
-#define SIGFOX_EP_ADDON_RFP_VERSION				"1.5"
+#define SIGFOX_EP_ADDON_RFP_VERSION "2.0"
 
 #endif /* __SIGFOX_EP_ADDON_RFP_VERSION_H__ */
