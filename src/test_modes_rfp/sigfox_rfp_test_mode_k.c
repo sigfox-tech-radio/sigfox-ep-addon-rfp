@@ -52,7 +52,7 @@ typedef struct {
     }flags;
     SIGFOX_RFP_test_mode_t test_mode;
     SIGFOX_EP_ADDON_RFP_API_progress_status_t progress_status;
-} SIGFOX_RFP_TEST_MODE_C_context_t;
+} SIGFOX_RFP_TEST_MODE_K_context_t;
 
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_init_fn(SIGFOX_RFP_test_mode_t *test_mode_callback);
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_K_process_fn(void);
@@ -64,7 +64,7 @@ const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_K_fn = {
     .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_K_get_progress_status_fn,
 };
 
-static SIGFOX_RFP_TEST_MODE_C_context_t sigfox_rfp_test_mode_k_ctx = {
+static SIGFOX_RFP_TEST_MODE_K_context_t sigfox_rfp_test_mode_k_ctx = {
     .flags.ep_api_message_cplt      = 0,
     .flags.test_mode_req            = 0,
     .test_mode.rc                   = SIGFOX_NULL,

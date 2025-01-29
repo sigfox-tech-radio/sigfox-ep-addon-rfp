@@ -53,7 +53,7 @@ typedef struct {
     }flags;
     SIGFOX_RFP_test_mode_t test_mode;
     SIGFOX_EP_ADDON_RFP_API_progress_status_t progress_status;
-} SIGFOX_RFP_TEST_MODE_C_context_t;
+} SIGFOX_RFP_TEST_MODE_D_context_t;
 
 static const sfx_u8 dl_pattern[SIGFOX_DL_PAYLOAD_SIZE_BYTES] = {0x32, 0x68, 0xc5, 0xba, 0x53, 0xae, 0x79, 0xe7};
 
@@ -67,7 +67,7 @@ const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_D_fn = {
     .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_D_get_progress_status_fn,
 };
 
-static SIGFOX_RFP_TEST_MODE_C_context_t sigfox_rfp_test_mode_d_ctx = {
+static SIGFOX_RFP_TEST_MODE_D_context_t sigfox_rfp_test_mode_d_ctx = {
     .flags.ep_api_message_cplt      = 0,
     .flags.test_mode_req            = 0,
     .test_mode.rc                   = SIGFOX_NULL,
