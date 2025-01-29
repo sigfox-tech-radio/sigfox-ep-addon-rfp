@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.1) - 29 Jan 2025
+
+### Added
+
+* Add major and minor versions macros.
+
+### Fixed
+
+* Fix **downlink completion callback** registering in blocking mode.
+* Fix **compilation warning** on test mode E and F.
+* Fix test modes context name duplication.
+
+### Known limitations
+
+* **Test mode G** not supported.
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v2.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.0) - 22 Nov 2024
 
 ### Added
@@ -18,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Upgrade to **sigfox-ep-lib v4.0**
 * Use sigfox_ep_addon_rfp_obj target object to build sigfox_ep_addon_rfp library.
 
-## Fixed
+### Fixed
 
 * Remove unifdef dependency in all cmake with linked target.
 * Extra warning in test mode J.
@@ -133,7 +151,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Test mode K** .
 * **Test mode L** .
 * **Test mode J** .
-
 
 ### Known limitations
 

@@ -65,7 +65,7 @@ typedef struct {
     test_state_t test_state;
     SIGFOX_RFP_test_mode_t test_mode;
     SIGFOX_EP_ADDON_RFP_API_progress_status_t progress_status;
-} SIGFOX_RFP_TEST_MODE_C_context_t;
+} SIGFOX_RFP_TEST_MODE_F_context_t;
 
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_init_fn(SIGFOX_RFP_test_mode_t *test_mode_callback);
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void);
@@ -77,7 +77,7 @@ const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_F_fn = {
     .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_F_get_progress_status_fn,
 };
 
-static SIGFOX_RFP_TEST_MODE_C_context_t sigfox_rfp_test_mode_f_ctx = {
+static SIGFOX_RFP_TEST_MODE_F_context_t sigfox_rfp_test_mode_f_ctx = {
     .flags.ep_api_message_cplt      = 0,
     .test_state                     = MODE_F_STATE_WAIT,
     .test_mode.rc                   = SIGFOX_NULL,
@@ -112,6 +112,7 @@ static void _SIGFOX_EP_API_message_cplt_cb(void) {
 #endif
 }
 
+#if !(defined SIGFOX_EP_SINGLE_FRAME) || !(defined SIGFOX_EP_UL_BIT_RATE_BPS) || !(defined SIGFOX_EP_TX_POWER_DBM_EIRP) || (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
 static void _populate_common_param(SIGFOX_EP_API_common_t *common_param) {
     // Configure common parameters structure
 #ifndef SIGFOX_EP_UL_BIT_RATE_BPS
@@ -130,6 +131,7 @@ static void _populate_common_param(SIGFOX_EP_API_common_t *common_param) {
     common_param->ep_key_type = SIGFOX_EP_KEY_PRIVATE;
 #endif
 }
+#endif
 
 static void _populate_test_param(SIGFOX_EP_API_TEST_parameters_t *test_param) {
     test_param->tx_frequency_hz = 0;
@@ -223,7 +225,9 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
             break;
         case MODE_F_STATE_DLK_MESSAGE:
             _populate_test_param(&test_param);
+#if !(defined SIGFOX_EP_SINGLE_FRAME) || !(defined SIGFOX_EP_UL_BIT_RATE_BPS) || !(defined SIGFOX_EP_TX_POWER_DBM_EIRP) || (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
             _populate_common_param(&message_param.common_parameters);
+#endif
             message_param.bidirectional_flag = SIGFOX_TRUE;
 #if (defined SIGFOX_EP_UL_PAYLOAD_SIZE) && (SIGFOX_EP_UL_PAYLOAD_SIZE != 0)
             message_param.type = SIGFOX_APPLICATION_MESSAGE_TYPE_BYTE_ARRAY;
@@ -278,7 +282,9 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_process_fn(void) 
                     goto errors;
                 }
                 _populate_test_param(&test_param);
+#if !(defined SIGFOX_EP_SINGLE_FRAME) || !(defined SIGFOX_EP_UL_BIT_RATE_BPS) || !(defined SIGFOX_EP_TX_POWER_DBM_EIRP) || (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
                 _populate_common_param(&message_param.common_parameters);
+#endif
 #ifndef SIGFOX_EP_SINGLE_FRAME
                 message_param.common_parameters.number_of_frames = 1;
 #endif

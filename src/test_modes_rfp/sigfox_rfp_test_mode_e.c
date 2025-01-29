@@ -83,7 +83,7 @@ typedef struct {
 #endif
     SIGFOX_RFP_test_mode_t test_mode;
     SIGFOX_EP_ADDON_RFP_API_progress_status_t progress_status;
-} SIGFOX_RFP_TEST_MODE_C_context_t;
+} SIGFOX_RFP_TEST_MODE_E_context_t;
 
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_init_fn(SIGFOX_RFP_test_mode_t *test_mode_callback);
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void);
@@ -95,7 +95,7 @@ const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_E_fn = {
     .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_E_get_progress_status_fn,
 };
 
-static SIGFOX_RFP_TEST_MODE_C_context_t sigfox_rfp_test_mode_e_ctx = {
+static SIGFOX_RFP_TEST_MODE_E_context_t sigfox_rfp_test_mode_e_ctx = {
     .flags.ep_api_message_cplt      = 0,
     .flags.mcu_api_timer_cplt       = 0,
     .flags.test_mode_req            = 0,
@@ -151,6 +151,7 @@ static void _MCU_API_timer_cplt_cb(void) {
 #endif
 }
 
+#if !(defined SIGFOX_EP_SINGLE_FRAME) || !(defined SIGFOX_EP_UL_BIT_RATE_BPS) || !(defined SIGFOX_EP_TX_POWER_DBM_EIRP) || (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
 static void _populate_common_param(SIGFOX_EP_API_common_t *common_param) {
     // Configure common parameters structure
 #ifndef SIGFOX_EP_UL_BIT_RATE_BPS
@@ -169,6 +170,7 @@ static void _populate_common_param(SIGFOX_EP_API_common_t *common_param) {
     common_param->ep_key_type = SIGFOX_EP_KEY_PRIVATE;
 #endif
 }
+#endif
 
 /*!******************************************************************
  * \fn static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_F_start_fn(SIGFOX_RFP_test_mode_t *rfp_test_mode)
@@ -250,7 +252,9 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
         case MODE_E_STATE_WAIT:
             break;
         case MODE_E_STATE_BIDIR_UP_ONLY:
+#if !(defined SIGFOX_EP_SINGLE_FRAME) || !(defined SIGFOX_EP_UL_BIT_RATE_BPS) || !(defined SIGFOX_EP_TX_POWER_DBM_EIRP) || (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
             _populate_common_param(&message_param.common_parameters);
+#endif
             test_param.tx_frequency_hz = 0;
             test_param.rx_frequency_hz = 0;
             test_param.dl_t_rx_ms = 0;
@@ -342,7 +346,9 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
                 if (message_status.field.execution_error == 1) {
                     goto errors;
                 }
+#if !(defined SIGFOX_EP_SINGLE_FRAME) || !(defined SIGFOX_EP_UL_BIT_RATE_BPS) || !(defined SIGFOX_EP_TX_POWER_DBM_EIRP) || (defined SIGFOX_EP_PUBLIC_KEY_CAPABLE)
                 _populate_common_param(&message_param.common_parameters);
+#endif
                 test_param.tx_frequency_hz = 0;
                 test_param.rx_frequency_hz = 0;
                 test_param.dl_t_rx_ms = LISTENIG_WINDOW_TIMER_MS;

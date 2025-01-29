@@ -344,9 +344,6 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_test_mode(SIGFOX_EP_ADD
     sigfox_ep_addon_rfp_api_ctx.flags.rfp_test_mode_process = 0;
     sigfox_ep_addon_rfp_api_ctx.flags.rfp_test_mode_cplt = 0;
     sigfox_ep_addon_rfp_api_ctx.test_mode_cplt_cb = test_mode->test_mode_cplt_cb;
-#ifdef SIGFOX_EP_BIDIRECTIONAL
-    rfp_test_mode.downlink_cplt_cb = (test_mode->downlink_cplt_cb);
-#endif
     rfp_test_mode.process_cb = _SIGFOX_RFP_TEST_MODE_process_callback;
     rfp_test_mode.cplt_cb = _SIGFOX_RFP_TEST_MODE_completion_callback;
 #endif
@@ -356,6 +353,9 @@ SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_test_mode(SIGFOX_EP_ADD
 #endif
 #ifndef SIGFOX_EP_TX_POWER_DBM_EIRP
     rfp_test_mode.tx_power_dbm_eirp = test_mode->tx_power_dbm_eirp;
+#endif
+#ifdef SIGFOX_EP_BIDIRECTIONAL
+    rfp_test_mode.downlink_cplt_cb = test_mode->downlink_cplt_cb;
 #endif
     if (sigfox_ep_addon_rfp_api_ctx.test_mode_fn == SIGFOX_NULL)
 #ifdef SIGFOX_EP_ERROR_CODES

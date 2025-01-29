@@ -53,9 +53,9 @@
 #define WINDOW_TIME_MS 18000
 #define START_PAYLOAD 0x40
 
-typedef struct test_mode_c_message_s test_mode_c_message_t;
-typedef struct test_mode_c_message_s {
-    SIGFOX_EP_ADDON_RFP_API_status_t (*send_ptr)(const test_mode_c_message_t *test_mode_c_message);
+typedef struct test_mode_j_message_s test_mode_j_message_t;
+typedef struct test_mode_j_message_s {
+    SIGFOX_EP_ADDON_RFP_API_status_t (*send_ptr)(const test_mode_j_message_t *test_mode_j_message);
 #ifndef SIGFOX_EP_UL_PAYLOAD_SIZE
     sfx_u8 size;
 #endif
@@ -67,7 +67,7 @@ typedef struct test_mode_c_message_s {
         SIGFOX_control_message_type_t control_type;
 #endif
     } type;
-} test_mode_c_message_t;
+} test_mode_j_message_t;
 
 typedef struct {
     struct {
@@ -84,10 +84,10 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_J_init_fn(SIGFOX_RF
 static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_J_process_fn(void);
 static SIGFOX_EP_ADDON_RFP_API_progress_status_t SIGFOX_RFP_TEST_MODE_J_get_progress_status_fn(void);
 #ifdef SIGFOX_EP_CONTROL_KEEP_ALIVE_MESSAGE
-static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_c_message_t *test_mode_c_message);
+static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_j_message_t *test_mode_j_message);
 #endif
 #ifdef SIGFOX_EP_APPLICATION_MESSAGES
-static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mode_c_message_t *test_mode_c_message);
+static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mode_j_message_t *test_mode_j_message);
 #endif
 
 const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_J_fn = {
@@ -96,7 +96,7 @@ const SIGFOX_RFP_test_mode_fn_t SIGFOX_RFP_TEST_MODE_J_fn = {
     .get_progress_status_fn = &SIGFOX_RFP_TEST_MODE_J_get_progress_status_fn,
 };
 
-static const test_mode_c_message_t MESSAGE_LIST[] = {
+static const test_mode_j_message_t MESSAGE_LIST[] = {
 #ifdef SIGFOX_EP_APPLICATION_MESSAGES
 #ifdef SIGFOX_EP_UL_PAYLOAD_SIZE
 #if (SIGFOX_EP_UL_PAYLOAD_SIZE == 0)
@@ -189,13 +189,13 @@ static void _MCU_API_timer_cplt_cb(void) {
 
 #ifdef SIGFOX_EP_CONTROL_KEEP_ALIVE_MESSAGE
 /*!******************************************************************
- * \fn static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_c_message_t *test_mode_c_message) {
+ * \fn static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_j_message_t *test_mode_j_message) {
  * \brief Send control message
- * \param[in]   test_mode_c_message: message to send
+ * \param[in]   test_mode_j_message: message to send
  * \param[out]  none
  * \retval      SIGFOX_EP_ADDON_RFP_API_status_t
  *******************************************************************/
-static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_c_message_t *test_mode_c_message) {
+static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_j_message_t *test_mode_j_message) {
 #ifdef SIGFOX_EP_ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
     SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
@@ -238,7 +238,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t _send_control_message(const test_mode_c_
 #if (defined SIGFOX_EP_REGULATORY) && (defined SIGFOX_EP_SPECTRUM_ACCESS_LDC)
     test_param.flags.field.tx_control_ldc_enable = SIGFOX_FALSE;
 #endif
-    control_message.type = test_mode_c_message->type.control_type;
+    control_message.type = test_mode_j_message->type.control_type;
 #ifdef SIGFOX_EP_ASYNCHRONOUS
     control_message.uplink_cplt_cb = SIGFOX_NULL;
     control_message.message_cplt_cb = &_SIGFOX_EP_API_message_cplt_cb;
@@ -276,13 +276,13 @@ errors:
 #endif
 #ifdef SIGFOX_EP_APPLICATION_MESSAGES
 /*!******************************************************************
- * \fn static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(void)
+ * \fn SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mode_j_message_t *test_mode_j_message)
  * \brief Send application message
- * \param[in]   test_mode_c_message: message to send
+ * \param[in]   test_mode_j_message: message to send
  * \param[out]  none
  * \retval      SIGFOX_EP_ADDON_RFP_API_status_t
  *******************************************************************/
-static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mode_c_message_t *test_mode_c_message) {
+static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mode_j_message_t *test_mode_j_message) {
 #ifdef SIGFOX_EP_ERROR_CODES
     SIGFOX_EP_ADDON_RFP_API_status_t status = SIGFOX_EP_ADDON_RFP_API_SUCCESS;
     SIGFOX_EP_API_status_t sigfox_ep_api_status = SIGFOX_EP_API_SUCCESS;
@@ -328,7 +328,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mod
 #if (defined SIGFOX_EP_REGULATORY) && (defined SIGFOX_EP_SPECTRUM_ACCESS_LDC)
     test_param.flags.field.tx_control_ldc_enable = SIGFOX_FALSE;
 #endif
-    application_message.type = test_mode_c_message->type.message_type;
+    application_message.type = test_mode_j_message->type.message_type;
 #ifdef SIGFOX_EP_UL_PAYLOAD_SIZE
 #if (SIGFOX_EP_UL_PAYLOAD_SIZE > 0)
     for (data_cnt = 0; data_cnt < SIGFOX_EP_UL_PAYLOAD_SIZE; data_cnt++) {
@@ -337,8 +337,8 @@ static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(const test_mod
     application_message.ul_payload = data;
 #endif
 #else
-    application_message.ul_payload_size_bytes = test_mode_c_message->size;
-    for (data_cnt = 0; data_cnt < test_mode_c_message->size; data_cnt++) {
+    application_message.ul_payload_size_bytes = test_mode_j_message->size;
+    for (data_cnt = 0; data_cnt < test_mode_j_message->size; data_cnt++) {
         data[data_cnt] = START_PAYLOAD + data_cnt;
     }
     application_message.ul_payload = data;
@@ -467,9 +467,9 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_J_process_fn(void) 
 #else
             MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
 #endif
-            if (sigfox_rfp_test_mode_j_ctx.message_list_idx < sizeof(MESSAGE_LIST) / sizeof(test_mode_c_message_t)) {
+            if (sigfox_rfp_test_mode_j_ctx.message_list_idx < sizeof(MESSAGE_LIST) / sizeof(test_mode_j_message_t)) {
                 tmp = 100 * (sigfox_rfp_test_mode_j_ctx.message_list_idx);
-                tmp /= (sizeof(MESSAGE_LIST) / sizeof(test_mode_c_message_t));
+                tmp /= (sizeof(MESSAGE_LIST) / sizeof(test_mode_j_message_t));
                 sigfox_rfp_test_mode_j_ctx.progress_status.progress = (sfx_u8) tmp;
 #ifdef SIGFOX_EP_ERROR_CODES
 
@@ -490,7 +490,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_J_process_fn(void) 
         }
     }
 #else
-    while (sigfox_rfp_test_mode_j_ctx.message_list_idx < sizeof(MESSAGE_LIST) / sizeof(test_mode_c_message_t)) {
+    while (sigfox_rfp_test_mode_j_ctx.message_list_idx < sizeof(MESSAGE_LIST) / sizeof(test_mode_j_message_t)) {
         if ((sigfox_rfp_test_mode_j_ctx.flags.ep_api_message_cplt == 1) && (sigfox_rfp_test_mode_j_ctx.flags.mcu_api_timer_cplt == 1)) {
             sigfox_rfp_test_mode_j_ctx.flags.ep_api_message_cplt = 0;
             sigfox_rfp_test_mode_j_ctx.flags.mcu_api_timer_cplt = 0;
@@ -505,7 +505,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_J_process_fn(void) 
             MCU_API_timer_stop(MCU_API_TIMER_INSTANCE_ADDON_RFP);
 #endif
             sigfox_rfp_test_mode_j_ctx.message_list_idx++;
-            if (sigfox_rfp_test_mode_j_ctx.message_list_idx < sizeof(MESSAGE_LIST) / sizeof(test_mode_c_message_t)) {
+            if (sigfox_rfp_test_mode_j_ctx.message_list_idx < sizeof(MESSAGE_LIST) / sizeof(test_mode_j_message_t)) {
 #ifdef SIGFOX_EP_ERROR_CODES
                 status = MESSAGE_LIST[sigfox_rfp_test_mode_j_ctx.message_list_idx].send_ptr(&MESSAGE_LIST[sigfox_rfp_test_mode_j_ctx.message_list_idx]);
                 SIGFOX_CHECK_STATUS(SIGFOX_EP_ADDON_RFP_API_SUCCESS);

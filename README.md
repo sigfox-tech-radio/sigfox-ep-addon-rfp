@@ -8,6 +8,7 @@ The table below shows the versions compatibility between this addon and the Sigf
 
 | **EP_ADDON_RFP** | **EP_LIB** |
 |:---:|:---:|
+| [v2.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.1) | >= [v4.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v4.0) |
 | [v2.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.0) | >= [v4.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v4.0) |
 | [v1.5](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.5) | [v3.5](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.5) |
 | [v1.4](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.4) | [v3.2](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.2) to [v3.4](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.4) |
