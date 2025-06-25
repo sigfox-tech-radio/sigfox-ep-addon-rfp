@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.2) - 25 Jun 2025
+
+### Fixed
+
+* Add **missing default value** on Sigfox EP library test parameters flags in test modes D and E.
+
+### Changed
+
+* Remove **#error directive** when `SIGFOX_EP_CERTIFICATION` is not defined, so that the addon can be removed via compilation flags when not used (switch between test and production firmware for example).
+
+### Known limitations
+
+* **Test mode G** not supported.
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v2.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.1) - 29 Jan 2025
 
 ### Added

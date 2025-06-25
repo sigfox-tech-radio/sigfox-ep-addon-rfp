@@ -2,12 +2,13 @@
 
 ## Description
 
-The **Sigfox End-Point RF & Protocol addon** shows an example of the [RF & Protocol test](https://support.sigfox.com/docs/rf-protocol-test-specification) implementation. This addon is an application of the [Sigfox End-Point library](https://github.com/sigfox-tech-radio/sigfox-ep-lib) which offers a new API (provided in the `sigfox_ep_addon_rfp_api.h` file) to execute Sigfox test modes.
+The **Sigfox End-Point RF & Protocol addon** shows an implementation example of the [RF & Protocol test specification](https://build.sigfox.com/sigfox_certification#sigfox-certification-tests). This addon is an application of the [Sigfox End-Point library](https://github.com/sigfox-tech-radio/sigfox-ep-lib) which offers a new API (provided in the `sigfox_ep_addon_rfp_api.h` file) to execute Sigfox test modes.
 
 The table below shows the versions compatibility between this addon and the Sigfox End-Point library.
 
 | **EP_ADDON_RFP** | **EP_LIB** |
 |:---:|:---:|
+| [v2.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.2) | >= [v4.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v4.0) |
 | [v2.1](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.1) | >= [v4.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v4.0) |
 | [v2.0](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.0) | >= [v4.0](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v4.0) |
 | [v1.5](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v1.5) | [v3.5](https://github.com/sigfox-tech-radio/sigfox-ep-lib/releases/tag/v3.5) |

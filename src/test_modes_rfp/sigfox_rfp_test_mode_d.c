@@ -180,6 +180,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t _send_application_message(void) {
     test_param.rx_frequency_hz = sigfox_rfp_test_mode_d_ctx.test_mode.rc->f_dl_hz;
     test_param.dl_t_rx_ms = TIMEOUT_MS;
     test_param.dl_t_w_ms = 0;
+    test_param.flags.all = 0xFF;
     test_param.flags.field.ul_enable = 0;
     test_param.flags.field.dl_enable = 1;
     test_param.flags.field.dl_decoding_enable = 0;
