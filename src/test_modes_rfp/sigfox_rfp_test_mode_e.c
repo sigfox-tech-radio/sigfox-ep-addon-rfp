@@ -259,6 +259,7 @@ static SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_RFP_TEST_MODE_E_process_fn(void) 
             test_param.rx_frequency_hz = 0;
             test_param.dl_t_rx_ms = 0;
             test_param.dl_t_w_ms = 0;
+            test_param.flags.all = 0xFF;
             test_param.flags.field.ul_enable = 1;
 #ifdef SIGFOX_EP_BIDIRECTIONAL
             test_param.flags.field.dl_enable = 0;

@@ -101,7 +101,7 @@ typedef struct {
 
 /*!******************************************************************
  * \enum SIGFOX_EP_ADDON_RFP_API_test_mode_t
- * \brief RF and protocol Test mode type. All tests modes reference are described in Sigfox RF & Protocol Test Specification document chapter 5 (https://support.sigfox.com/docs/rf-protocol-test-specification)
+ * \brief RF and protocol Test mode type. All tests modes reference are described in Sigfox RF & Protocol Test Specification document chapter 5 (https://build.sigfox.com/sigfox_certification#sigfox-certification-tests)
  *******************************************************************/
 typedef enum {
     SIGFOX_EP_ADDON_RFP_API_TEST_MODE_C = 0, /*!< Only BPSK with Synchro Bit + Synchro frame + PN sequence : no hopping centered on the TX_frequency */
@@ -213,7 +213,6 @@ SIGFOX_EP_ADDON_RFP_API_progress_status_t SIGFOX_EP_ADDON_RFP_API_get_test_mode_
 SIGFOX_EP_ADDON_RFP_API_status_t SIGFOX_EP_ADDON_RFP_API_get_version(sfx_u8 **version, sfx_u8 *version_size_char);
 #endif
 
-#else
-#error "SIGFOX_EP_CERTIFICATION flag must be define for this RFP addon"
-#endif
+#endif /* SIGFOX_EP_CERTIFICATION */
+
 #endif /* __SIGFOX_EP_ADDON_RFP_API_H__ */
