@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.3](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.3) - 13 Nov 2026
+
+### Changed
+
+* Changed from the Clear BSD License to the standard **BSD 3-Clause License**. See the `LICENSE` file for details.
+
+### Known limitations
+
+* **Test mode H** not supported.
+* **Test mode I** not supported.
+
 ## [v2.2](https://github.com/sigfox-tech-radio/sigfox-ep-addon-rfp/releases/tag/v2.2) - 25 Jun 2025
 
 ### Fixed
@@ -19,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -37,7 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -59,7 +68,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -86,7 +94,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -99,7 +106,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -115,7 +121,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -145,7 +150,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known limitations
 
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
 
@@ -173,6 +177,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **Test mode D** not supported.
 * **Test mode E** not supported.
 * **Test mode F** not supported.
-* **Test mode G** not supported.
 * **Test mode H** not supported.
 * **Test mode I** not supported.
